@@ -142,3 +142,59 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
  .hero-poster,.poster-seal,.home-service,.home-service .arrow,.featured-work .work-card .artboard,.featured-work .work-card .art-title,.text-link{transition:none}
  .hero-poster:hover,.featured-work .work-card:hover .artboard,.featured-work .work-card:focus-visible .artboard{transform:none;box-shadow:none}
 }
+
+
+/* Motion refinement: calm, responsive transitions with an Apple-like finish. */
+:root{
+  --ease-smooth:cubic-bezier(.22,1,.36,1);
+  --motion-fast:220ms;
+  --motion-base:420ms;
+  --motion-slow:720ms;
+}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:no-preference){
+  .menu-panel{
+    transform:translate3d(0,-9px,0) scale(.985);
+    transform-origin:top right;
+    transition:opacity 360ms var(--ease-smooth),transform 460ms var(--ease-smooth),visibility 360ms;
+    will-change:opacity,transform;
+  }
+  .menu-open .menu-panel{transform:translate3d(0,0,0) scale(1)}
+  .menu-panel>a{transition:transform 360ms var(--ease-smooth),color 220ms ease}
+  .menu-panel .nav-note,.menu-panel .menu-foot{transition:opacity 360ms var(--ease-smooth),transform 460ms var(--ease-smooth)}
+  .menu-panel .nav-note,.menu-panel .menu-foot{opacity:0;transform:translateY(8px)}
+  .menu-open .menu-panel .nav-note,.menu-open .menu-panel .menu-foot{opacity:1;transform:translateY(0);transition-delay:80ms}
+  .menu-open .menu-panel>a:nth-of-type(1){transition-delay:35ms}
+  .menu-open .menu-panel>a:nth-of-type(2){transition-delay:65ms}
+  .menu-open .menu-panel>a:nth-of-type(3){transition-delay:95ms}
+  .menu-open .menu-panel>a:nth-of-type(4){transition-delay:125ms}
+  .reveal{opacity:0;transform:translate3d(0,22px,0);transition:opacity 760ms var(--ease-smooth),transform 760ms var(--ease-smooth);transition-delay:var(--reveal-delay,0ms);will-change:opacity,transform}
+  .reveal.in{opacity:1;transform:translate3d(0,0,0);will-change:auto}
+  .work-preview .work-card,.home-services .home-service{transition:transform 480ms var(--ease-smooth),opacity 600ms var(--ease-smooth),background 300ms ease,border-color 300ms ease}
+  .work-preview .work-card:nth-child(2),.home-services .home-service:nth-child(2){transition-delay:55ms}
+  .home-services .home-service:nth-child(3){transition-delay:100ms}
+  .button,.header-cta,.text-link,.featured-link a,.footer-links a,.work-card,.service-card,.faq-q{
+    transition-duration:360ms;
+    transition-timing-function:var(--ease-smooth);
+  }
+  .button{transition:background 320ms var(--ease-smooth),color 320ms var(--ease-smooth),border-color 320ms var(--ease-smooth),transform 320ms var(--ease-smooth),box-shadow 320ms var(--ease-smooth)}
+  .button:active{transform:scale(.98)}
+  .header-cta,.text-link,.featured-link a,.footer-links a{transition:color 240ms ease,opacity 240ms ease}
+  .header-cta:hover,.text-link:hover,.featured-link a:hover,.footer-links a:hover{opacity:.72}
+  .menu-toggle{transition:background 280ms var(--ease-smooth),color 280ms var(--ease-smooth),border-color 280ms var(--ease-smooth)}
+  .menu-toggle:hover{background:var(--ink);color:var(--paper)}
+  .menu-icon i{transition:transform 360ms var(--ease-smooth)}
+  .hero-poster{transition:transform 650ms var(--ease-smooth),box-shadow 650ms var(--ease-smooth)}
+  .poster-seal{transition:transform 500ms var(--ease-smooth)}
+  .home-service{transition:padding 380ms var(--ease-smooth),background 380ms var(--ease-smooth)}
+  .home-service .arrow{transition:transform 380ms var(--ease-smooth),color 300ms ease}
+  .featured-work .work-card .artboard{transition:transform 650ms var(--ease-smooth),box-shadow 650ms var(--ease-smooth)}
+  .featured-work .work-card .art-title{transition:letter-spacing 500ms var(--ease-smooth)}
+  input,textarea,select{transition:border-color 240ms ease,box-shadow 240ms ease,background 240ms ease}
+  input:focus,textarea:focus,select:focus{box-shadow:0 0 0 3px rgba(49,90,203,.12)}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important;transition-delay:0ms!important}
+  .reveal{opacity:1;transform:none}
+}
