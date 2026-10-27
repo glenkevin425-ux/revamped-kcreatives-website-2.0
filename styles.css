@@ -82,3 +82,37 @@
   .menu-panel>a{font-size:clamp(28px,8vw,36px)}
   .menu-panel .menu-foot{flex-direction:column;gap:6px}
 }
+
+
+/* Homepage conversion flow inspired by strong landing-page structure. */
+.featured-work{padding-top:clamp(58px,8vw,104px);padding-bottom:clamp(58px,8vw,96px)}
+.featured-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:30px}
+.featured-heading h2{font:600 clamp(38px,6vw,72px)/.9 var(--display);letter-spacing:-.08em;margin:13px 0 0}
+.featured-heading>p{max-width:390px;margin:0 0 4px;color:var(--muted);font-size:13px;line-height:1.75}
+.featured-work .work-preview{gap:20px}
+.featured-work .artboard{height:clamp(280px,34vw,430px);min-height:280px}
+.featured-work .artboard-a{background:#e7eaf1;color:var(--ink)}
+.featured-work .artboard-a .art-title span{color:var(--blue)}
+.featured-work .artboard-b{background:var(--ink);color:var(--paper)}
+.featured-work .artboard-b .art-title span{color:#b8c6ff}
+.featured-work .art-circle{border-color:var(--blue)}
+.featured-work .art-bars i{border-color:var(--paper)}
+.featured-work .art-bars i:nth-child(1){background:#b8c6ff}
+.featured-work .art-bars i:nth-child(2){background:var(--blue)}
+.featured-work .art-bars i:nth-child(3){background:var(--white)}
+.featured-work .work-meta{padding-top:16px}
+.featured-work .work-meta h3{font:600 clamp(19px,2vw,25px)/1.15 var(--display);letter-spacing:-.045em;margin:0 0 7px}
+.featured-work .work-meta p{font-size:12px;line-height:1.65;color:var(--muted);margin:0;max-width:360px}
+.featured-work .work-type{color:var(--muted);white-space:nowrap}
+.featured-link{display:flex;justify-content:space-between;align-items:center;gap:18px;border-top:1px solid var(--line);margin-top:32px;padding-top:17px;font-size:12px}
+.featured-link .text-link{font-weight:700}
+.featured-link .text-link:hover{color:var(--blue)}
+@media(max-width:680px){
+ .featured-work{padding-top:52px;padding-bottom:56px}
+ .featured-heading{display:block;margin-bottom:24px}
+ .featured-heading h2{font-size:clamp(40px,10vw,58px)}
+ .featured-heading>p{margin-top:15px;max-width:440px}
+ .featured-work .work-preview{grid-template-columns:1fr;gap:30px}
+ .featured-work .artboard{height:clamp(290px,82vw,410px);min-height:290px}
+ .featured-link{align-items:flex-start;flex-direction:column;gap:9px}
+}
