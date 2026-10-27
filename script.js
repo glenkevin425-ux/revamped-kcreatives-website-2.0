@@ -81,7 +81,7 @@
     '.featured-work .featured-heading','.featured-work .work-card','.featured-work .featured-link',
     '.home-approach .approach-head','.home-approach .approach-item',
     '.home-second-top','.home-services .home-service','.home-lastline','.home-footer',
-    '.info-row','.studio-panel','.brief-form','.contact-band .wrap'
+    '.info-row','.studio-panel','.brief-form','.package-card','.pricing-heading','.case-note','.contact-band .wrap'
   ];
   const targets=[...new Set(revealTargets.flatMap(selector=>[...document.querySelectorAll(selector)]))];
   targets.forEach(el=>{
@@ -126,29 +126,35 @@
     button.setAttribute('aria-expanded',String(open));
   }));
 
-  // The project brief is prepared locally; it is never represented as a server submission.
+  // Service links can preselect a package; enquiry is handed off to WhatsApp for the user to review and send.
   const form=document.querySelector('#briefForm');
+  const serviceSelect=document.querySelector('#service');
+  const serviceFromUrl=new URLSearchParams(window.location.search).get('service');
+  if(serviceSelect&&serviceFromUrl){
+    const allowed=[...serviceSelect.options].some(option=>option.value===serviceFromUrl);
+    if(allowed)serviceSelect.value=serviceFromUrl;
+  }
   if(form){
     const feedback=document.querySelector('#briefFeedback');
-    form.addEventListener('submit',async event=>{
+    form.addEventListener('submit',event=>{
       event.preventDefault();
       if(!form.reportValidity())return;
       const data=new FormData(form);
-      const brief='KCREATIVES PROJECT ENQUIRY\\n\\nName: '+data.get('name')+'\\nBusiness: '+(data.get('business')||'Not specified')+'\\nService: '+data.get('service')+'\\nProject details: '+data.get('details')+'\\n\\nYour Business. Seen. Remembered. Chosen.';
-      try{
-        await navigator.clipboard.writeText(brief);
-        feedback.textContent='Brief copied. Paste it into your preferred messaging or email app to send it to Kcreatives.';
-      }catch(error){
-        const output=document.querySelector('#briefOutput');
-        output.hidden=false;
-        output.value=brief;
-        output.focus();
-        output.select();
-        feedback.textContent='Copy the brief below and send it to Kcreatives through your preferred contact channel.';
-      }
+      const brief=[
+        'KCREATIVES PROJECT ENQUIRY',
+        '',
+        'Name: '+data.get('name'),
+        'Business: '+(data.get('business')||'Not specified'),
+        'Service: '+(serviceSelect?.selectedOptions[0]?.textContent||'Not specified'),
+        'Project details: '+data.get('details'),
+        '',
+        'Your Business. Seen. Remembered. Chosen.'
+      ].join('\n');
+      const whatsappUrl='https://wa.me/254769061949?text='+encodeURIComponent(brief);
+      if(feedback)feedback.textContent='Opening WhatsApp. Review the message there and press Send to contact Kcreatives.';
+      window.location.href=whatsappUrl;
     });
   }
-
 
   // Subtle scroll-linked drift gives the concept artwork physical depth without video assets.
   if(!reduceMotion&&'IntersectionObserver'in window){
