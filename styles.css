@@ -283,3 +283,14 @@ html{scroll-behavior:smooth}
  .reveal{opacity:1;transform:none;transition:none;will-change:auto}
  .scroll-progress{display:none}
 }
+
+.menu-panel>a[aria-current="page"]{color:var(--blue)}
+.menu-panel>a[aria-current="page"]:after{content:"";display:inline-block;width:clamp(18px,3vw,38px);height:2px;background:currentColor;vertical-align:middle;margin-left:14px}
+.site-header .menu-toggle:focus-visible,.menu-panel a:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.home-approach .approach-head,.home-approach .approach-item{min-width:0}
+@media(prefers-reduced-motion:no-preference){
+ .home-approach .approach-item{transition:transform 560ms var(--ease-editorial),opacity 560ms var(--ease-editorial)}
+ .home-approach .approach-item:hover{transform:translateY(-3px)}
+ .menu-panel>a[aria-current="page"]:after{animation:nav-mark-in 420ms var(--ease-editorial) both}
+ @keyframes nav-mark-in{from{transform:scaleX(0);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
+}
