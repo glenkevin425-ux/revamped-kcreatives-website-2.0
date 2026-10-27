@@ -4,6 +4,42 @@
   const panel=document.querySelector('.menu-panel');
   const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Persistent theme switch; warm parchment by default, with a restrained charcoal/bronze dark palette.
+  const themeToggle=document.querySelector('.theme-toggle');
+  const themeLabel=themeToggle?.querySelector('.theme-label');
+  const themeSymbol=themeToggle?.querySelector('.theme-symbol');
+  const storedTheme=(()=>{try{return localStorage.getItem('kcreatives-theme')}catch(error){return null}})();
+  const preferredTheme=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  const applyTheme=(theme)=>{
+    document.documentElement.dataset.theme=theme;
+    if(themeToggle){
+      const dark=theme==='dark';
+      themeToggle.setAttribute('aria-pressed',String(dark));
+      themeToggle.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');
+      if(themeLabel)themeLabel.textContent=dark?'Light mode':'Dark mode';
+      if(themeSymbol)themeSymbol.textContent=dark?'☼':'◐';
+    }
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content',theme==='dark'?'#171715':'#f0ede5');
+  };
+  applyTheme(storedTheme==='dark'||storedTheme==='light'?storedTheme:preferredTheme);
+  themeToggle?.addEventListener('click',()=>{
+    const next=document.documentElement.dataset.theme==='dark'?'light':'dark';
+    applyTheme(next);
+    try{localStorage.setItem('kcreatives-theme',next)}catch(error){}
+  });
+
+  // Capsule navigation gently contracts on scroll without hiding the brand or controls.
+  const header=document.querySelector('.site-header');
+  let headerFrame=0;
+  const updateHeader=()=>{
+    header?.classList.toggle('is-scrolled',window.scrollY>24);
+    headerFrame=0;
+  };
+  window.addEventListener('scroll',()=>{
+    if(!headerFrame)headerFrame=requestAnimationFrame(updateHeader);
+  },{passive:true});
+  updateHeader();
+
   // Navigation stays compact, keyboard-accessible, and easy to dismiss.
   if(toggle&&panel){
     const close=()=>{
