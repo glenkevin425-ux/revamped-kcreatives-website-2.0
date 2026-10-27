@@ -76,6 +76,23 @@
     targets.forEach(el=>observer.observe(el));
   }else targets.forEach(el=>el.classList.add('in'));
 
+  // A barely-there pointer tilt on the hero artwork, only for fine pointers.
+  if(!reduceMotion&&window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+    document.querySelectorAll('.hero-poster').forEach(poster=>{
+      poster.addEventListener('pointermove',event=>{
+        const bounds=poster.getBoundingClientRect();
+        const x=(event.clientX-bounds.left)/bounds.width-.5;
+        const y=(event.clientY-bounds.top)/bounds.height-.5;
+        poster.style.setProperty('--poster-tilt-x',`${(-y*2.2).toFixed(2)}deg`);
+        poster.style.setProperty('--poster-tilt-y',`${(x*2.2).toFixed(2)}deg`);
+      });
+      poster.addEventListener('pointerleave',()=>{
+        poster.style.setProperty('--poster-tilt-x','0deg');
+        poster.style.setProperty('--poster-tilt-y','0deg');
+      });
+    });
+  }
+
   // FAQ disclosure controls.
   document.querySelectorAll('.faq-q').forEach(button=>button.addEventListener('click',()=>{
     const item=button.closest('.faq-item');
