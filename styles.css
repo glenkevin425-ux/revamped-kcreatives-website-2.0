@@ -116,3 +116,29 @@
  .featured-work .artboard{height:clamp(290px,82vw,410px);min-height:290px}
  .featured-link{align-items:flex-start;flex-direction:column;gap:9px}
 }
+
+
+/* Craft pass: purposeful motion, sharper interaction feedback, no extra palette. */
+.home-copy{animation:kcreatives-enter .7s var(--ease) both}
+.home-art-wrap{animation:kcreatives-enter .85s var(--ease) .08s both}
+@keyframes kcreatives-enter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.hero-poster{transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.hero-poster:hover{transform:translateY(-4px) rotate(-.35deg);box-shadow:10px 10px 0 var(--ink)}
+.poster-seal{transition:transform .35s var(--ease)}
+.hero-poster:hover .poster-seal{transform:rotate(5deg)}
+.home-service{transition:padding .25s var(--ease),background .25s var(--ease)}
+.home-service:hover{padding-left:10px;padding-right:10px;background:rgba(255,255,255,.045)}
+.home-service .arrow{transition:transform .25s var(--ease),color .25s var(--ease)}
+.home-service:hover .arrow{transform:translate(3px,-3px);color:#fff}
+.featured-work .work-card .artboard{transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.featured-work .work-card:hover .artboard,.featured-work .work-card:focus-visible .artboard{transform:translateY(-5px);box-shadow:0 12px 24px rgba(25,28,34,.1)}
+.featured-work .work-card .art-title{transition:letter-spacing .35s var(--ease)}
+.featured-work .work-card:hover .art-title{letter-spacing:-.085em}
+.text-link{transition:color .2s var(--ease)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.menu-panel>a{transition:transform .2s var(--ease),color .2s var(--ease)}
+@media(prefers-reduced-motion:reduce){
+ .home-copy,.home-art-wrap{animation:none}
+ .hero-poster,.poster-seal,.home-service,.home-service .arrow,.featured-work .work-card .artboard,.featured-work .work-card .art-title,.text-link{transition:none}
+ .hero-poster:hover,.featured-work .work-card:hover .artboard,.featured-work .work-card:focus-visible .artboard{transform:none;box-shadow:none}
+}
