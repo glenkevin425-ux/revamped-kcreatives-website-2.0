@@ -58,3 +58,27 @@
 .services-band{background:var(--ink)}
 ::selection{background:var(--blue);color:#fff}
 @media(max-width:680px){.menu-panel{padding-top:85px}.menu-panel>a:hover{transform:translateX(3px)}}
+
+
+/* Standard dropdown navigation: compact panel anchored beneath the header. */
+.menu-panel{
+  position:fixed;
+  inset:76px max(18px, calc((100vw - 1320px)/2)) auto auto;
+  width:min(390px, calc(100vw - 36px));
+  max-height:calc(100dvh - 94px);
+  overflow-y:auto;
+  justify-content:flex-start;
+  padding:26px 28px 22px;
+  background:var(--paper);
+  color:var(--ink);
+  border:1px solid var(--line);
+  box-shadow:0 16px 40px rgba(25,28,34,.12);
+}
+.menu-panel .nav-note{margin-bottom:18px}
+.menu-panel>a{font-size:clamp(27px, 3vw, 38px);line-height:1.12;padding:5px 0}
+.menu-panel .menu-foot{margin-top:22px;padding-top:13px;flex-direction:column;gap:6px;font-size:9px}
+@media(max-width:680px){
+  .menu-panel{inset:68px 18px auto auto;width:min(360px,calc(100vw - 36px));max-height:calc(100dvh - 82px);padding:22px 22px 18px}
+  .menu-panel>a{font-size:clamp(28px,8vw,36px)}
+  .menu-panel .menu-foot{flex-direction:column;gap:6px}
+}
