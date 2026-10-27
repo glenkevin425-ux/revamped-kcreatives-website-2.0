@@ -1111,3 +1111,34 @@ body{padding-top:94px}
 @media(prefers-reduced-motion:reduce){
   .site-header,.theme-symbol{transition:none}
 }
+
+
+.capsule-links{
+  display:flex;
+  align-items:center;
+  gap:clamp(16px,2.2vw,32px);
+  margin-left:auto;
+  margin-right:clamp(18px,3vw,42px);
+}
+.capsule-links a{
+  position:relative;
+  color:var(--muted);
+  font:500 10px/1 var(--mono);
+  letter-spacing:.035em;
+  transition:color 250ms ease;
+}
+.capsule-links a:hover,.capsule-links a[aria-current="page"]{color:var(--ink)}
+.capsule-links a:after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:-7px;
+  height:1px;
+  background:var(--metal);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 350ms var(--ease-editorial);
+}
+.capsule-links a:hover:after,.capsule-links a[aria-current="page"]:after{transform:scaleX(1)}
+html[data-theme="dark"] .capsule-links a:hover,
+html[data-theme="dark"] .capsule-links a[aria-current="page"]{color:#e9e2d5}
+@media(max-width:760px){.capsule-links{display:none}}
