@@ -122,4 +122,69 @@
       }
     });
   }
+
+
+  // Desktop-only cursor and magnetic CTA: restrained, opt-in to fine pointers.
+  const finePointer=window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if(finePointer&&!reduceMotion){
+    const orb=document.createElement('div');
+    orb.className='cursor-orb';
+    orb.setAttribute('aria-hidden','true');
+    body.appendChild(orb);
+    let pointerX=-20,pointerY=-20,orbX=-20,orbY=-20,orbFrame=0;
+    const moveOrb=()=>{
+      orbX+=(pointerX-orbX)*.22;
+      orbY+=(pointerY-orbY)*.22;
+      orb.style.left=orbX+'px';
+      orb.style.top=orbY+'px';
+      if(Math.abs(pointerX-orbX)>.15||Math.abs(pointerY-orbY)>.15)orbFrame=requestAnimationFrame(moveOrb);
+      else orbFrame=0;
+    };
+    document.addEventListener('pointermove',event=>{
+      pointerX=event.clientX;pointerY=event.clientY;
+      orb.classList.add('is-visible');
+      if(!orbFrame)orbFrame=requestAnimationFrame(moveOrb);
+    },{passive:true});
+    document.addEventListener('pointerleave',()=>orb.classList.remove('is-visible'));
+    document.querySelectorAll('a,button').forEach(el=>{
+      el.addEventListener('pointerenter',()=>orb.classList.add('is-active'));
+      el.addEventListener('pointerleave',()=>orb.classList.remove('is-active'));
+    });
+
+    document.querySelectorAll('.button').forEach(button=>{
+      button.addEventListener('pointermove',event=>{
+        const rect=button.getBoundingClientRect();
+        const dx=(event.clientX-(rect.left+rect.width/2))*.08;
+        const dy=(event.clientY-(rect.top+rect.height/2))*.12;
+        button.style.setProperty('--mag-x',Math.max(-5,Math.min(5,dx))+'px');
+        button.style.setProperty('--mag-y',Math.max(-5,Math.min(5,dy))+'px');
+        button.style.transform='translate3d(var(--mag-x),var(--mag-y),0)';
+      });
+      button.addEventListener('pointerleave',()=>{
+        button.style.removeProperty('--mag-x');
+        button.style.removeProperty('--mag-y');
+        button.style.removeProperty('transform');
+      });
+    });
+  }
+
+  // Subtle scroll-linked drift gives the concept artwork physical depth without video assets.
+  if(!reduceMotion&&'IntersectionObserver'in window){
+    const artCards=[...document.querySelectorAll('.work-card .artboard')];
+    let artFrame=0;
+    const driftArt=()=>{
+      artCards.forEach(art=>{
+        const rect=art.getBoundingClientRect();
+        if(rect.bottom<0||rect.top>window.innerHeight)return;
+        const progress=(rect.top+rect.height/2-window.innerHeight/2)/window.innerHeight;
+        art.style.setProperty('--art-drift',(progress*-10).toFixed(2)+'px');
+      });
+      artFrame=0;
+    };
+    window.addEventListener('scroll',()=>{
+      if(!artFrame)artFrame=requestAnimationFrame(driftArt);
+    },{passive:true});
+    driftArt();
+  }
+
 })();
