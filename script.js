@@ -28,17 +28,7 @@
     try{localStorage.setItem('kcreatives-theme',next)}catch(error){}
   });
 
-  // Capsule navigation gently contracts on scroll without hiding the brand or controls.
-  const header=document.querySelector('.site-header');
-  let headerFrame=0;
-  const updateHeader=()=>{
-    header?.classList.toggle('is-scrolled',window.scrollY>24);
-    headerFrame=0;
-  };
-  window.addEventListener('scroll',()=>{
-    if(!headerFrame)headerFrame=requestAnimationFrame(updateHeader);
-  },{passive:true});
-  updateHeader();
+  // Keep the site header in its normal document flow; the navigation opens as a full-screen overlay.
 
   // Navigation stays compact, keyboard-accessible, and easy to dismiss.
   if(toggle&&panel){
@@ -61,7 +51,7 @@
 
   // Mark the current page in the shared navigation.
   const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
-  document.querySelectorAll('.menu-panel a,.capsule-links a').forEach(link=>{
+  document.querySelectorAll('.menu-panel a').forEach(link=>{
     const target=(link.getAttribute('href')||'').split('/').pop().toLowerCase();
     if(target===current)link.setAttribute('aria-current','page');
   });
