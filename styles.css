@@ -498,3 +498,58 @@ h1,h2,h3,h4,p,a,button,input,textarea,select{font-family:inherit}
   .menu-panel,.menu-panel>a,.menu-panel .nav-note,.menu-panel .menu-foot{opacity:1;transform:none;will-change:auto}
   .reveal{opacity:1;transform:none;will-change:auto}
 }
+
+/* Hamburger menu: smoother open/close, with visibility held until the exit finishes. */
+.menu-panel{
+  transform:translate3d(0,-10px,0) scale(.985);
+  transform-origin:top right;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:
+    opacity 420ms var(--ease-smooth),
+    transform 520ms var(--ease-smooth),
+    visibility 0s linear 520ms;
+  backface-visibility:hidden;
+}
+.menu-open .menu-panel{
+  transform:translate3d(0,0,0) scale(1);
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transition-delay:0s,0s,0s;
+}
+@media(prefers-reduced-motion:no-preference){
+  .menu-panel>a{
+    opacity:0;
+    transform:translate3d(0,8px,0);
+    transition:
+      opacity 360ms var(--ease-smooth),
+      transform 440ms var(--ease-smooth),
+      color 300ms ease;
+  }
+  .menu-open .menu-panel>a{
+    opacity:1;
+    transform:translate3d(0,0,0);
+  }
+  .menu-open .menu-panel>a:nth-of-type(1){transition-delay:35ms}
+  .menu-open .menu-panel>a:nth-of-type(2){transition-delay:65ms}
+  .menu-open .menu-panel>a:nth-of-type(3){transition-delay:95ms}
+  .menu-open .menu-panel>a:nth-of-type(4){transition-delay:125ms}
+  .menu-open .menu-panel>a:nth-of-type(5){transition-delay:155ms}
+  .menu-panel .nav-note,.menu-panel .menu-foot{
+    opacity:0;
+    transform:translate3d(0,6px,0);
+    transition:opacity 380ms var(--ease-smooth),transform 440ms var(--ease-smooth);
+  }
+  .menu-open .menu-panel .nav-note,.menu-open .menu-panel .menu-foot{
+    opacity:1;
+    transform:translate3d(0,0,0);
+    transition-delay:70ms;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .menu-panel{transition:none!important}
+  .menu-panel>a,.menu-panel .nav-note,.menu-panel .menu-foot{opacity:1;transform:none;transition:none!important}
+}
+
