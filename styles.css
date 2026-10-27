@@ -294,3 +294,14 @@ html{scroll-behavior:smooth}
  .menu-panel>a[aria-current="page"]:after{animation:nav-mark-in 420ms var(--ease-editorial) both}
  @keyframes nav-mark-in{from{transform:scaleX(0);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
 }
+
+/* Restrained 3D response: a little depth, never a full-screen spectacle. */
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+ .home-art-wrap .hero-poster{
+  transform:perspective(1200px) rotateX(var(--poster-tilt-x,0deg)) rotateY(var(--poster-tilt-y,0deg));
+  transition:transform 680ms var(--ease-editorial),box-shadow 680ms var(--ease-editorial);
+ }
+ .home-art-wrap .hero-poster:hover{
+  transform:perspective(1200px) translateY(-4px) rotateX(var(--poster-tilt-x,0deg)) rotateY(var(--poster-tilt-y,0deg)) rotate(-.2deg);
+ }
+}
