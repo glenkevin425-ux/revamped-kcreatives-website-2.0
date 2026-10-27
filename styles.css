@@ -1089,3 +1089,10 @@ body{padding-top:0}
 @media(max-width:390px){
   .theme-label{display:inline}
 }
+
+
+/* Restore native cursor behavior; no custom cursor or magnetic controls. */
+*,*::before,*::after{cursor:auto!important}
+a,button,[role="button"],input,textarea,select{cursor:pointer}
+input,textarea,select{cursor:text}
+.cursor-orb{display:none!important}
