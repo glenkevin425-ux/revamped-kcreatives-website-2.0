@@ -61,7 +61,7 @@
 
   // Mark the current page in the shared navigation.
   const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
-  document.querySelectorAll('.menu-panel a').forEach(link=>{
+  document.querySelectorAll('.menu-panel a,.capsule-links a').forEach(link=>{
     const target=(link.getAttribute('href')||'').split('/').pop().toLowerCase();
     if(target===current)link.setAttribute('aria-current','page');
   });
